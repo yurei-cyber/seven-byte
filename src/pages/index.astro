@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AgencyHeader from '../components/AgencyHeader.astro';
+import AgencyFooter from '../components/AgencyFooter.astro';
+import LineButton from '../components/LineButton.astro';
+import { sevenByte } from '../config/site';
+---
+
+<BaseLayout
+  title="Seven Byte｜浜松・掛川・袋井の整備工場・中古車店向けホームページ"
+  description="セブンバイトは、浜松・掛川・袋井の自動車整備工場と中古車販売店向けに、わかりやすく信頼感のあるホームページを制作します。"
+  ogImage="/images/agency-desk.jpg"
+>
+  <AgencyHeader />
+  <main id="main">
+    <section class="hero" aria-label="Seven Byte のご案内">
+      <div class="hero-media">
+        <img
+          src="/images/agency-desk.jpg"
+          alt="ノートPCとデスクでウェブサイト制作に取り組む様子"
+          width="1600"
+          height="1065"
+          fetchpriority="high"
+        />
+      </div>
+      <div class="hero-content">
+        <p class="hero-brand">Seven <span class="accent">Byte</span></p>
+        <h1>整備工場と中古車店のための、実務に効くホームページ</h1>
+        <p class="lede">
+          浜松・掛川・袋井の地域密着ビジネスに合わせて、車検案内・在庫導線・電話・アクセスを迷わせない構成で制作します。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/contact/">お見積りを依頼</a>
+          <a class="btn btn-ghost" href="/demo/" style="border-color:rgba(247,249,251,0.45);color:#f7f9fb">
+            デモサイトを見る
+          </a>
+          {
+            sevenByte.lineEnabled ? (
+              <LineButton href={sevenByte.lineUrl} enabled />
+            ) : null
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>提供していること</h2>
+          <p>
+            見た目だけのサイトではなく、来店と電話につながる情報設計を重視します。必要なページに絞り、更新しやすい形で納品します。
+          </p>
+        </div>
+        <ul class="stack-list">
+          <li>
+            <strong>整備工場向けサイト</strong>
+            <p>車検・点検・修理メニュー、営業時間、アクセス、問い合わせ導線を整理し、スマホでも迷わない構成にします。</p>
+          </li>
+          <li>
+            <strong>中古車販売店向けサイト</strong>
+            <p>店舗の信頼感と連絡手段を前面に。在庫の見せ方は初期プランの範囲内でシンプルに設計します。</p>
+          </li>
+          <li>
+            <strong>地域向けの基本SEO</strong>
+            <p>タイトル・説明文・見出し構造・地図・連絡先の明示など、検索と信頼性の土台を整えます。</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap split">
+        <div class="media-plane">
+          <img
+            src="/images/workshop-hero.jpg"
+            alt="自動車整備の作業風景（雰囲気写真）"
+            width="1920"
+            height="1080"
+            loading="lazy"
+          />
+        </div>
+        <div class="prose">
+          <h2>浜松・掛川・袋井に特化</h2>
+          <p>
+            遠州エリアの整備工場・中古車販売店が、近所のお客様に「ここなら任せられる」と感じてもらえる表現を目指します。過度な演出や根拠のない実績表現は使いません。
+          </p>
+          <p>
+            まずは初期プランの範囲をご確認ください。追加機能は必要になったタイミングで段階的に広げられます。
+          </p>
+          <p style="margin-top:1.5rem">
+            <a class="btn btn-primary" href="/plan/">初期プランの範囲を見る</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section band">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>次の一歩</h2>
+          <p>デモで完成イメージを確認し、進め方とお見積りからご相談ください。</p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/process/">制作の進め方</a>
+          <a class="btn btn-ghost" href="/contact/" style="border-color:rgba(247,249,251,0.4);color:#f7f9fb">
+            お見積りフォーム
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <AgencyFooter />
+</BaseLayout>

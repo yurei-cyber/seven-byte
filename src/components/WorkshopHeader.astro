@@ -1,0 +1,61 @@
+---
+import { demoWorkshop } from '../config/site';
+
+const path = Astro.url.pathname;
+
+const links = [
+  { href: '/demo/', label: 'ホーム' },
+  { href: '/demo/services/', label: 'サービス' },
+  { href: '/demo/contact/', label: 'ご連絡' },
+];
+---
+
+<div class="demo-banner">
+  {demoWorkshop.legalNote}
+  {' '}
+  <a href="/">Seven Byte のご案内へ</a>
+</div>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="/demo/">{demoWorkshop.name}</a>
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="workshop-nav"
+      data-nav-toggle
+    >
+      メニュー
+    </button>
+    <nav class="nav" id="workshop-nav" data-nav aria-label="デモサイト">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={
+              link.href === '/demo/'
+                ? path === '/demo/' || path === '/demo'
+                  ? 'page'
+                  : undefined
+                : path.startsWith(link.href.replace(/\/$/, ''))
+                  ? 'page'
+                  : undefined
+            }
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const nav = document.querySelector('[data-nav]');
+  toggle?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+</script>

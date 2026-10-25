@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkshopHeader from '../../components/WorkshopHeader.astro';
+import WorkshopFooter from '../../components/WorkshopFooter.astro';
+import { demoWorkshop } from '../../config/site';
+---
+
+<BaseLayout
+  title={`${demoWorkshop.name}（デモ）`}
+  description="Seven Byte が制作した架空の自動車整備工場デモサイト。実在の店舗ではありません。"
+  theme="workshop"
+  ogImage="/images/workshop-hero.jpg"
+  canonicalPath="/demo/"
+>
+  <WorkshopHeader />
+  <main id="main">
+    <section class="hero" aria-label={`${demoWorkshop.name} ホーム`}>
+      <div class="hero-media">
+        <img
+          src="/images/workshop-hero.jpg"
+          alt="整備工場の作業風景（ストック写真・デモ用）"
+          width="1920"
+          height="1080"
+          fetchpriority="high"
+        />
+      </div>
+      <div class="hero-content">
+        <p class="hero-brand">{demoWorkshop.name}</p>
+        <h1>車検・点検・修理。近所で相談できる整備工場（架空デモ）</h1>
+        <p class="lede">
+          浜松エリアを想定した架空店舗のサンプルです。営業時間・連絡先・メニューの見せ方の参考にしてください。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/demo/contact/">ご連絡（デモ）</a>
+          <a class="btn btn-ghost" href="/demo/services/" style="border-color:rgba(250,250,250,0.45);color:#fafafa">
+            サービス一覧
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>このデモで伝えていること</h2>
+          <p>実在の口コミ・評価・顧客数は掲載していません。情報の置き方とトーンだけをご覧ください。</p>
+        </div>
+        <ul class="stack-list">
+          <li>
+            <strong>何の店か、すぐ分かる</strong>
+            <p>ファーストビューで店舗名と役割を明確にし、次の行動（連絡・メニュー確認）へ誘導します。</p>
+          </li>
+          <li>
+            <strong>スマホでも迷わない</strong>
+            <p>メニューと連絡導線を短くし、整備工場のお客様が使いやすい構成にしています。</p>
+          </li>
+          <li>
+            <strong>信頼は事実ベースで</strong>
+            <p>架空の星評価や「地域No.1」などの根拠のない表現は使いません。</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap split reverse">
+        <div class="media-plane">
+          <img
+            src="/images/workshop-bay.jpg"
+            alt="自動車のディテール（ストック写真・デモ用）"
+            width="1200"
+            height="675"
+            loading="lazy"
+          />
+        </div>
+        <div class="prose">
+          <h2>営業案内（架空）</h2>
+          <p>{demoWorkshop.hours}</p>
+          <p>{demoWorkshop.area}</p>
+          <p>
+            定休日や緊急対応の扱いは、本番サイトでは店舗の事実に合わせて記載します。このデモではサンプル文言のみです。
+          </p>
+          <p style="margin-top:1.5rem">
+            <a class="btn btn-primary" href="/demo/services/">取扱い内容を見る</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section band">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Seven Byte について</h2>
+          <p>このページは制作サンプルです。自店舗向けのサイトについては本サイトからご相談ください。</p>
+        </div>
+        <a class="btn btn-primary" href="/contact/">Seven Byte に相談する</a>
+      </div>
+    </section>
+  </main>
+  <WorkshopFooter />
+</BaseLayout>

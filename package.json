@@ -1,0 +1,19 @@
+{
+  "name": "seven-byte",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "description": "Seven Byte marketing site + fictional auto workshop demo (Hamamatsu / Kakegawa / Fukuroi)",
+  "dependencies": {
+    "astro": "^7.4.2"
+  }
+}

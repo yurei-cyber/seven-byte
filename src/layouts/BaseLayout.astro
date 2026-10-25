@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+import { sevenByte } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  theme?: 'agency' | 'workshop';
+  canonicalPath?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  theme = 'agency',
+  canonicalPath = Astro.url.pathname,
+  ogImage = '/images/agency-desk.jpg',
+} = Astro.props;
+
+const canonical = new URL(canonicalPath, sevenByte.siteUrl).toString();
+const ogImageUrl = new URL(ogImage, sevenByte.siteUrl).toString();
+const fullTitle = title.includes('Seven Byte') || title.includes('セブンバイト')
+  ? title
+  : `${title} | Seven Byte`;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content={sevenByte.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <slot name="head" />
+  </head>
+  <body class={theme === 'workshop' ? 'theme-workshop' : undefined}>
+    <a class="skip-link" href="#main">本文へスキップ</a>
+    <slot />
+  </body>
+</html>

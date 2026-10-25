@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import WorkshopHeader from '../../../components/WorkshopHeader.astro';
+import WorkshopFooter from '../../../components/WorkshopFooter.astro';
+import { demoWorkshop } from '../../../config/site';
+---
+
+<BaseLayout
+  title={`サービス｜${demoWorkshop.name}（デモ）`}
+  description="架空整備工場デモのサービス一覧。車検・点検・一般修理などの見せ方サンプル。"
+  theme="workshop"
+  ogImage="/images/workshop-bay.jpg"
+  canonicalPath="/demo/services/"
+>
+  <WorkshopHeader />
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 0.75rem">
+            サービス（架空サンプル）
+          </h1>
+          <p>価格や保証内容は店舗ごとに異なります。本番では事実のみを掲載します。</p>
+        </div>
+        <ul class="stack-list">
+          <li>
+            <strong>車検</strong>
+            <p>法定点検項目の説明、代車の有無、予約の連絡方法を分かりやすく配置する想定です。</p>
+          </li>
+          <li>
+            <strong>点検・オイル交換</strong>
+            <p>日常的に問い合わせが多いメニューを一覧化し、電話・フォームへすぐ進めるようにします。</p>
+          </li>
+          <li>
+            <strong>一般修理</strong>
+            <p>ブレーキ・バッテリー・タイヤなど、よくある相談を短文で示します。誇張表現は使いません。</p>
+          </li>
+          <li>
+            <strong>中古車のご相談（併設想定）</strong>
+            <p>販売併設の場合は、整備力とセットで信頼感を伝える構成にできます。</p>
+          </li>
+        </ul>
+        <p style="margin-top:2rem">
+          <a class="btn btn-primary" href="/demo/contact/">デモのお問い合わせへ</a>
+        </p>
+      </div>
+    </section>
+  </main>
+  <WorkshopFooter />
+</BaseLayout>

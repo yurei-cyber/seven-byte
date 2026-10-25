@@ -1,0 +1,33 @@
+---
+interface Props {
+  href?: string;
+  enabled?: boolean;
+  label?: string;
+  class?: string;
+}
+
+const {
+  href = '',
+  enabled = false,
+  label = 'LINEで相談',
+  class: className = 'btn btn-line',
+} = Astro.props;
+---
+
+{
+  enabled && href ? (
+    <a class={className} href={href} rel="noopener noreferrer" target="_blank">
+      {label}
+    </a>
+  ) : (
+    <span
+      class={`${className}`}
+      aria-disabled="true"
+      title="LINE URL が未設定のため表示のみ無効です"
+      style="display:none"
+      data-line-placeholder
+    >
+      {label}（未設定）
+    </span>
+  )
+}

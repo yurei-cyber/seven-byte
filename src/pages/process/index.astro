@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AgencyHeader from '../../components/AgencyHeader.astro';
+import AgencyFooter from '../../components/AgencyFooter.astro';
+---
+
+<BaseLayout
+  title="制作の進め方"
+  description="Seven Byte への依頼から公開までの流れ。ヒアリング、構成、デザイン、公開、引き継ぎまで。"
+>
+  <AgencyHeader />
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 0.75rem">
+            制作の進め方
+          </h1>
+          <p>小さな店舗でも負担が少ないよう、確認ポイントを絞った進め方です。</p>
+        </div>
+
+        <ol class="steps">
+          <li>
+            <h3>ヒアリング</h3>
+            <p>業態、強み、連絡手段、今困っている点（電話がつながりにくい、場所が分かりにくい等）を伺います。</p>
+          </li>
+          <li>
+            <h3>構成案</h3>
+            <p>ページ一覧と各ページの役割を文章で共有します。この段階で「載せないこと」も決めます。</p>
+          </li>
+          <li>
+            <h3>デザインと実装</h3>
+            <p>地域ビジネスに合うトーンでデザインし、静的サイトとして実装します。スマホ表示を優先して確認します。</p>
+          </li>
+          <li>
+            <h3>内容確認</h3>
+            <p>文言・写真・営業時間・地図を店舗側で確認。虚偽の実績や口コミは掲載しません。</p>
+          </li>
+          <li>
+            <h3>公開と引き継ぎ</h3>
+            <p>本番公開、簡易マニュアル、今後の更新ポイントを共有します。LINE・フォームの接続もこのタイミングで設定できます。</p>
+          </li>
+        </ol>
+
+        <p style="margin-top:2.5rem">
+          <a class="btn btn-primary" href="/contact/">お見積りを依頼</a>
+          <a class="btn btn-ghost" href="/demo/" style="margin-left:0.5rem">完成イメージ（デモ）</a>
+        </p>
+      </div>
+    </section>
+  </main>
+  <AgencyFooter />
+</BaseLayout>

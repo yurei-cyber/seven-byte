@@ -1,0 +1,64 @@
+---
+import { sevenByte } from '../config/site';
+
+const path = Astro.url.pathname;
+
+const links = [
+  { href: '/', label: 'ご案内' },
+  { href: '/plan/', label: '初期プラン' },
+  { href: '/process/', label: '進め方' },
+  { href: '/contact/', label: 'お見積り' },
+  { href: '/demo/', label: 'デモサイト' },
+];
+---
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="/">Seven <span>Byte</span></a>
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+      data-nav-toggle
+    >
+      メニュー
+    </button>
+    <nav class="nav" id="primary-nav" data-nav aria-label="メイン">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={
+              link.href === '/'
+                ? path === '/'
+                  ? 'page'
+                  : undefined
+                : path.startsWith(link.href.replace(/\/$/, ''))
+                  ? 'page'
+                  : undefined
+            }
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      {
+        sevenByte.lineEnabled ? (
+          <a class="btn btn-line" href={sevenByte.lineUrl} rel="noopener noreferrer" target="_blank">
+            LINEで相談
+          </a>
+        ) : null
+      }
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const nav = document.querySelector('[data-nav]');
+  toggle?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+</script>

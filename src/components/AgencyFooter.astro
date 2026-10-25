@@ -1,0 +1,33 @@
+---
+import { sevenByte } from '../config/site';
+---
+
+<footer class="site-footer">
+  <div class="wrap inner">
+    <div>
+      <strong class="brand">Seven <span>Byte</span></strong>
+      <p style="margin:0.4rem 0 0">{sevenByte.area}の整備工場・中古車販売店向けホームページ制作</p>
+    </div>
+    <div>
+      {
+        sevenByte.email ? (
+          <p style="margin:0">
+            メール：
+            <a href={`mailto:${sevenByte.email}`}>{sevenByte.email}</a>
+          </p>
+        ) : (
+          <p style="margin:0">お問い合わせは <a href="/contact/">お見積りフォーム</a> から</p>
+        )
+      }
+      {
+        sevenByte.phone ? (
+          <p style="margin:0.25rem 0 0">
+            電話：
+            <a href={`tel:${sevenByte.phone.replace(/[^\d+]/g, '')}`}>{sevenByte.phone}</a>
+          </p>
+        ) : null
+      }
+      <p style="margin:0.75rem 0 0">&copy; {new Date().getFullYear()} Seven Byte</p>
+    </div>
+  </div>
+</footer>
