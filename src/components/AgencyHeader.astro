@@ -54,6 +54,7 @@ const links = [
 <script>
   const toggle = document.querySelector('[data-nav-toggle]');
   const nav = document.querySelector('[data-nav]');
+  const header = document.querySelector('.site-header');
   toggle?.addEventListener('click', () => {
     const open = nav?.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -64,4 +65,9 @@ const links = [
       toggle?.setAttribute('aria-expanded', 'false');
     });
   });
+  const onScroll = () => {
+    header?.classList.toggle('is-scrolled', window.scrollY > 12);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
 </script>

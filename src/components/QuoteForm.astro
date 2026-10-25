@@ -135,10 +135,10 @@ const mode = sevenByte.formMode;
     決済情報やマイナンバー等の機微情報は送信しないでください。
     {
       mode === 'endpoint'
-        ? '送信先は設定済みのフォームエンドポイントです（サーバー側でも検証されます）。'
+        ? '送信先は設定済みのフォーム受付です。'
         : mailto
-          ? '送信時にメール作成画面が開きます。送信完了はメーラー側の操作が必要です。'
-          : '受付先が未設定のため、現時点では送信できません。PUBLIC_CONTACT_EMAIL または PUBLIC_FORM_ENDPOINT の設定が必要です。'
+          ? '送信時にメール作成画面が開きます。メーラーでの送信完了が必要です。'
+          : '現在、公開受付先の設定前のため、このフォームからは送信完了できません。'
     }
   </p>
 
@@ -239,7 +239,7 @@ const mode = sevenByte.formMode;
       if (!mailto) {
         statusEl.dataset.state = 'err';
         statusEl.textContent =
-          '受付先が未設定です。送信は完了していません。PUBLIC_CONTACT_EMAIL または PUBLIC_FORM_ENDPOINT を設定してください。';
+          '受付先が未設定です。送信は完了していません。';
         return;
       }
       const subject = encodeURIComponent(

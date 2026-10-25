@@ -51,7 +51,9 @@ await page.waitForFunction(() => {
 const validStatus = await page.$eval('#quote-status', (el) => el.textContent);
 results.push({
   test: 'valid form without endpoint does not false-succeed',
-  ok: (validStatus || '').includes('未設定') && !(validStatus || '').includes('送信しました'),
+  ok:
+    ((validStatus || '').includes('未設定') || (validStatus || '').includes('完了していません')) &&
+    !(validStatus || '').includes('送信しました'),
   validStatus,
 });
 

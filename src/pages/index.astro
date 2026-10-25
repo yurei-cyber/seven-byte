@@ -25,6 +25,16 @@ import { path as p } from '../config/paths';
   <main id="main">
     <section class="hero" aria-label="Seven Byte ヒーロー">
       <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-media" aria-hidden="true">
+        <img
+          src={p('/images/agency-desk.jpg')}
+          alt=""
+          width="1600"
+          height="1065"
+          fetchpriority="high"
+        />
+      </div>
+      <div class="hero-grid" aria-hidden="true"></div>
       <div class="hero-mark" aria-hidden="true">7</div>
       <div class="hero-content">
         <p class="hero-brand">SE<span class="seven">7</span>EN BYTE</p>
@@ -34,7 +44,6 @@ import { path as p } from '../config/paths';
         <div class="hero-actions">
           <a class="btn btn-primary" href={p('/contact/')}>無料で相談する</a>
           <a class="btn btn-ghost" href="#services">サービスを見る</a>
-          <LineButton href={sevenByte.lineUrl} enabled={sevenByte.lineEnabled} label="LINEで相談" />
         </div>
       </div>
     </section>
@@ -50,8 +59,9 @@ import { path as p } from '../config/paths';
         </div>
         <div class="grid-3">
           {
-            services.map((service) => (
+            services.map((service, i) => (
               <article class="service-block">
+                <span class="service-index">0{i + 1}</span>
                 <h3>{service.title}</h3>
                 <p class="price">{service.price}</p>
                 <p class="price-note">{service.priceNote}</p>
@@ -96,9 +106,7 @@ import { path as p } from '../config/paths';
         </div>
         <div>
           <span class="eyebrow">Automotive</span>
-          <h2 style="font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 0.75rem">
-            整備工場・中古車店の現場に寄せた設計
-          </h2>
+          <h2 class="section-title">整備工場・中古車店の現場に寄せた設計</h2>
           <p style="color:var(--muted);margin:0 0 1rem">
             車検メニュー、営業時間、アクセス、電話・フォーム導線など、来店につながる情報を優先します。架空の口コミや「地域No.1」表現は使いません。
           </p>
@@ -204,37 +212,28 @@ import { path as p } from '../config/paths';
           </div>
           <QuoteForm />
         </div>
-        <aside>
+        <aside class="contact-aside">
           <p class="footer-title">連絡について</p>
           {
             sevenByte.email ? (
-              <p style="color:var(--muted)">
+              <p>
                 メール：
                 <a href={`mailto:${sevenByte.email}`}>{sevenByte.email}</a>
               </p>
             ) : (
-              <p style="color:var(--muted)">
-                表示用メールは <code>PUBLIC_CONTACT_EMAIL</code> 設定後に表示されます。
-              </p>
+              <p>公開用のメールアドレスは、設定後にこちらへ表示します。</p>
             )
           }
           {
             sevenByte.phone ? (
-              <p style="color:var(--muted)">
+              <p>
                 電話：
                 <a href={`tel:${sevenByte.phone.replace(/[^\d+]/g, '')}`}>{sevenByte.phone}</a>
               </p>
             ) : null
           }
-          <p style="margin-top:1rem">
-            <LineButton href={sevenByte.lineUrl} enabled={sevenByte.lineEnabled} />
-          </p>
-          {
-            !sevenByte.lineEnabled ? (
-              <p class="hint">LINEボタンは <code>PUBLIC_LINE_URL</code> 設定まで非表示です。</p>
-            ) : null
-          }
-          <p style="color:var(--muted);margin-top:1.5rem">{sevenByte.areaDetail}</p>
+          <LineButton href={sevenByte.lineUrl} enabled={sevenByte.lineEnabled} />
+          <p style="margin-top:1.5rem">{sevenByte.areaDetail}</p>
           <p style="margin-top:1rem">
             <a href={p('/privacy/')}>プライバシーポリシー</a>
           </p>
