@@ -17,8 +17,8 @@ import { path as p } from '../config/paths';
 ---
 
 <BaseLayout
-  title="Seven Byte｜ホームページ制作・業務システム・保守（浜松・掛川・袋井）"
-  description="セブンバイトは、ホームページ制作から業務システム開発・保守まで。浜松・掛川・袋井の中小企業向けに実用的なデジタルソリューションを提供します。"
+  title="Seven Byte｜浜松・掛川・袋井のホームページ制作・業務システム・保守"
+  description={sevenByte.metaDescription}
   ogImage="/images/agency-desk.jpg"
 >
   <AgencyHeader />
@@ -38,6 +38,7 @@ import { path as p } from '../config/paths';
       <div class="hero-mark" aria-hidden="true">7</div>
       <div class="hero-content">
         <p class="hero-brand">SE<span class="seven">7</span>EN BYTE</p>
+        <p class="hero-locale">{sevenByte.heroRegion}</p>
         <h1>{sevenByte.headline}</h1>
         <p class="lede">{sevenByte.subhead}</p>
         <p class="region">{sevenByte.areaDetail}</p>

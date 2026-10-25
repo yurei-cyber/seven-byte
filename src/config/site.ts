@@ -15,10 +15,14 @@ export const sevenByte = {
   mark: '7',
   headline: 'ビジネスを、次のステージへ。',
   subhead:
-    'ホームページ制作から業務システム開発まで。テクノロジーで、日々の仕事をもっとシンプルに。',
-  complement: '中小企業のための、実用的なデジタルソリューション。',
+    '浜松・掛川・袋井の店舗・事務所のために。ホームページ制作から業務システム開発まで、日々の仕事をもっとシンプルに。',
+  complement: '遠州エリアの中小企業のための、実用的なデジタルソリューション。',
   area: '浜松・掛川・袋井',
-  areaDetail: '静岡県（浜松・掛川・袋井）を中心に、全国リモートにも対応',
+  areaLabel: '対応エリア',
+  areaDetail: '浜松・掛川・袋井を中心に対応（ほか地域はご相談）',
+  heroRegion: '静岡県 浜松・掛川・袋井',
+  metaDescription:
+    'Seven Byte（セブンバイト）は浜松・掛川・袋井の中小企業向けに、ホームページ制作・業務システム開発・保守を提供。遠州エリアの店舗・事務所の実務に寄り添います。',
   email: (import.meta.env.PUBLIC_CONTACT_EMAIL as string | undefined)?.trim() || '',
   phone: (import.meta.env.PUBLIC_CONTACT_PHONE as string | undefined)?.trim() || '',
   siteUrl,

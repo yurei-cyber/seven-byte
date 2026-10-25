@@ -376,6 +376,16 @@ a:hover {
   transform-origin: center bottom;
 }
 
+.hero-locale {
+  margin: 0 0 1.1rem;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--purple-soft);
+  animation: rise 0.9s var(--ease) 0.04s both;
+}
+
 .hero h1 {
   font-family: var(--font-display);
   font-size: clamp(1.85rem, 4.4vw, 3.15rem);
@@ -448,6 +458,7 @@ a:hover {
   }
 
   .hero-brand,
+  .hero-locale,
   .hero h1,
   .hero .lede,
   .hero .region,
@@ -980,6 +991,29 @@ a:hover {
   margin: 0 0 1rem;
   font-size: 1rem;
   font-weight: 600;
+}
+
+.footer-locale {
+  margin: 1.1rem 0 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.footer-locale-label {
+  font-family: var(--font-brand);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--purple-soft);
+}
+
+.footer-locale strong {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.06em;
 }
 
 .demo-banner {

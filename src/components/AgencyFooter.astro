@@ -11,7 +11,11 @@ const home = p('/');
     <div>
       <a class="brand" href={home}>SE<span class="seven">7</span>EN BYTE</a>
       <p style="margin:0.75rem 0 0">{sevenByte.complement}</p>
-      <p style="margin:0.5rem 0 0">{sevenByte.areaDetail}</p>
+      <p class="footer-locale">
+        <span class="footer-locale-label">{sevenByte.areaLabel}</span>
+        <strong>{sevenByte.area}</strong>
+      </p>
+      <p style="margin:0.35rem 0 0">{sevenByte.areaDetail}</p>
     </div>
     <div>
       <p class="footer-title">サービス</p>
