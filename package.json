@@ -10,10 +10,16 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "typecheck": "astro check"
   },
-  "description": "Seven Byte marketing site + fictional auto workshop demo (Hamamatsu / Kakegawa / Fukuroi)",
+  "description": "Seven Byte institutional site — web, business systems, maintenance (Hamamatsu / Kakegawa / Fukuroi)",
   "dependencies": {
     "astro": "^7.4.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@types/node": "^26.6.5",
+    "typescript": "^6.0.3"
   }
 }

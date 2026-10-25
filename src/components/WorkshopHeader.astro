@@ -19,7 +19,9 @@ const links = [
 
 <header class="site-header">
   <div class="inner">
-    <a class="brand" href={p('/demo/')}>{demoWorkshop.name}</a>
+    <a class="brand" href={p('/demo/')} style="text-transform:none;letter-spacing:0.02em">
+      {demoWorkshop.name}
+    </a>
     <button
       class="nav-toggle"
       type="button"
@@ -36,7 +38,9 @@ const links = [
             href={link.href}
             aria-current={
               link.match === '/demo'
-                ? current.includes('/demo') && !current.includes('/demo/services') && !current.includes('/demo/contact')
+                ? current.includes('/demo') &&
+                  !current.includes('/demo/services') &&
+                  !current.includes('/demo/contact')
                   ? 'page'
                   : undefined
                 : current.includes(link.match)

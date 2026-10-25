@@ -25,9 +25,8 @@ const normalizedPath = canonicalPath.startsWith(import.meta.env.BASE_URL)
   : p(canonicalPath);
 const canonical = `${origin}${normalizedPath.endsWith('/') ? normalizedPath : `${normalizedPath}/`}`;
 const ogImageUrl = `${origin}${p(ogImage)}`;
-const fullTitle = title.includes('Seven Byte') || title.includes('セブンバイト')
-  ? title
-  : `${title} | Seven Byte`;
+const fullTitle =
+  title.includes('Seven Byte') || title.includes('セブンバイト') ? title : `${title} | Seven Byte`;
 ---
 
 <!doctype html>

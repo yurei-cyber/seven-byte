@@ -1,66 +1,69 @@
 ---
-import { path as p } from '../../config/paths';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AgencyHeader from '../../components/AgencyHeader.astro';
 import AgencyFooter from '../../components/AgencyFooter.astro';
 import QuoteForm from '../../components/QuoteForm.astro';
 import LineButton from '../../components/LineButton.astro';
 import { sevenByte } from '../../config/site';
+import { path as p } from '../../config/paths';
 ---
 
 <BaseLayout
-  title="お見積り依頼"
-  description="Seven Byte へのお見積り・ご相談フォーム。浜松・掛川・袋井の整備工場・中古車販売店向け。"
+  title="無料相談・お見積り"
+  description="Seven Byte への無料相談・お見積りフォーム。浜松・掛川・袋井の中小企業・整備工場・中古車販売店向け。"
 >
   <AgencyHeader />
   <main id="main">
     <section class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 0.75rem">
-            お見積り・ご相談
-          </h1>
-          <p>
-            業態と現状を教えてください。初期プランの範囲でご提案します。決済情報など機微な情報は送らないでください。
-          </p>
-        </div>
-
-        <div class="split" style="align-items:start">
-          <QuoteForm />
-          <aside class="prose">
-            <h2>連絡手段</h2>
-            {
-              sevenByte.email ? (
-                <p>
-                  メール：
-                  <a href={`mailto:${sevenByte.email}`}>{sevenByte.email}</a>
-                </p>
-              ) : (
-                <p>メールアドレスは環境変数 <code>PUBLIC_CONTACT_EMAIL</code> で設定できます。</p>
-              )
-            }
-            {
-              sevenByte.phone ? (
-                <p>
-                  電話：
-                  <a href={`tel:${sevenByte.phone.replace(/[^\d+]/g, '')}`}>{sevenByte.phone}</a>
-                </p>
-              ) : null
-            }
-            <p style="margin-top:1rem">
-              <LineButton href={sevenByte.lineUrl} enabled={sevenByte.lineEnabled} />
+      <div class="wrap split" style="align-items:start">
+        <div>
+          <div class="section-head">
+            <span class="eyebrow">Contact</span>
+            <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.5rem);margin:0 0 0.75rem">
+              無料相談・お見積り
+            </h1>
+            <p>
+              機微情報は送らないでください。受付先未設定の場合は送信完了になりません。
             </p>
-            {
-              !sevenByte.lineEnabled ? (
-                <p class="hint">
-                  LINEボタンは <code>PUBLIC_LINE_URL</code> を設定するまで非表示です。架空のアカウントは掲載しません。
-                </p>
-              ) : null
-            }
-            <h3>対応エリア</h3>
-            <p>{sevenByte.area}</p>
-          </aside>
+          </div>
+          <QuoteForm />
         </div>
+        <aside class="prose">
+          <h2>連絡手段</h2>
+          {
+            sevenByte.email ? (
+              <p>
+                メール：
+                <a href={`mailto:${sevenByte.email}`}>{sevenByte.email}</a>
+              </p>
+            ) : (
+              <p>
+                メール表示は <code>PUBLIC_CONTACT_EMAIL</code> で設定できます。
+              </p>
+            )
+          }
+          {
+            sevenByte.phone ? (
+              <p>
+                電話：
+                <a href={`tel:${sevenByte.phone.replace(/[^\d+]/g, '')}`}>{sevenByte.phone}</a>
+              </p>
+            ) : null
+          }
+          <p style="margin-top:1rem">
+            <LineButton href={sevenByte.lineUrl} enabled={sevenByte.lineEnabled} />
+          </p>
+          {
+            !sevenByte.lineEnabled ? (
+              <p class="hint">
+                LINEは <code>PUBLIC_LINE_URL</code> 設定まで非表示です。架空アカウントは掲載しません。
+              </p>
+            ) : null
+          }
+          <h3>対応エリア</h3>
+          <p>{sevenByte.areaDetail}</p>
+          <p><a href={p('/privacy/')}>プライバシーポリシー</a></p>
+        </aside>
       </div>
     </section>
   </main>

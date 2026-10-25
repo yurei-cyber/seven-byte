@@ -1,36 +1,50 @@
 ---
 import { sevenByte } from '../config/site';
 import { path as p } from '../config/paths';
+
+const year = new Date().getFullYear();
+const home = p('/');
 ---
 
 <footer class="site-footer">
   <div class="wrap inner">
     <div>
-      <strong class="brand">Seven <span>Byte</span></strong>
-      <p style="margin:0.4rem 0 0">{sevenByte.area}の整備工場・中古車販売店向けホームページ制作</p>
+      <a class="brand" href={home}>SE<span class="seven">7</span>EN BYTE</a>
+      <p style="margin:0.75rem 0 0">{sevenByte.complement}</p>
+      <p style="margin:0.5rem 0 0">{sevenByte.areaDetail}</p>
     </div>
     <div>
+      <p class="footer-title">サービス</p>
+      <ul class="footer-links">
+        <li><a href={`${home}#services`}>ホームページ制作</a></li>
+        <li><a href={`${home}#services`}>業務システム開発</a></li>
+        <li><a href={`${home}#services`}>保守・運用サポート</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">ナビ</p>
+      <ul class="footer-links">
+        <li><a href={`${home}#process`}>進め方</a></li>
+        <li><a href={`${home}#portfolio`}>実績デモ</a></li>
+        <li><a href={p('/contact/')}>お問い合わせ</a></li>
+        <li><a href={p('/demo/')}>架空デモサイト</a></li>
+        <li><a href={p('/privacy/')}>プライバシー</a></li>
+      </ul>
       {
         sevenByte.email ? (
-          <p style="margin:0">
-            メール：
+          <p style="margin:1rem 0 0">
             <a href={`mailto:${sevenByte.email}`}>{sevenByte.email}</a>
           </p>
-        ) : (
-          <p style="margin:0">
-            お問い合わせは <a href={p('/contact/')}>お見積りフォーム</a> から
-          </p>
-        )
+        ) : null
       }
       {
         sevenByte.phone ? (
-          <p style="margin:0.25rem 0 0">
-            電話：
+          <p style="margin:0.35rem 0 0">
             <a href={`tel:${sevenByte.phone.replace(/[^\d+]/g, '')}`}>{sevenByte.phone}</a>
           </p>
         ) : null
       }
-      <p style="margin:0.75rem 0 0">&copy; {new Date().getFullYear()} Seven Byte</p>
+      <p style="margin:1rem 0 0">&copy; {year} Seven Byte</p>
     </div>
   </div>
 </footer>

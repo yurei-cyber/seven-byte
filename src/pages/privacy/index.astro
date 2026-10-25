@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AgencyHeader from '../../components/AgencyHeader.astro';
+import AgencyFooter from '../../components/AgencyFooter.astro';
+import { sevenByte } from '../../config/site';
+import { path as p } from '../../config/paths';
+---
+
+<BaseLayout
+  title="プライバシーポリシー"
+  description="Seven Byte のプライバシーポリシー。お問い合わせフォームで取得する情報の扱いについて。"
+>
+  <AgencyHeader />
+  <main id="main">
+    <section class="section">
+      <div class="wrap prose">
+        <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.5rem);margin:0 0 1rem">
+          プライバシーポリシー
+        </h1>
+        <p>
+          Seven Byte（以下「当方」）は、本ウェブサイトのお問い合わせ等を通じて取得する情報を、次のとおり取り扱います。未設定の連絡先や実在しない所在地は記載していません。
+        </p>
+
+        <h2>取得する情報</h2>
+        <p>
+          お問い合わせフォームにご入力いただいた店舗名、業種、所在地（市町村）、担当者名、メールアドレス、電話番号（任意）、ご要望文面など、送信に必要な範囲の情報です。決済情報やマイナンバー等の機微情報の送信は想定していません。
+        </p>
+
+        <h2>利用目的</h2>
+        <ul>
+          <li>お問い合わせ・見積依頼への回答</li>
+          <li>サービス内容のご案内（ご依頼に関連する範囲）</li>
+          <li>スパム・不正送信の防止</li>
+        </ul>
+
+        <h2>保管と送信先</h2>
+        <p>
+          フォームの送信先は、環境変数で設定したメールアドレス（mailto）または外部フォームエンドポイント（例：Formspree）です。未設定の場合、送信は完了しません。当方が別途サーバーに永続保存する仕組みは、本静的サイト単体には含まれません。
+        </p>
+
+        <h2>第三者提供</h2>
+        <p>
+          法令に基づく場合を除き、ご本人の同意なく第三者へ提供しません。外部フォームサービスを利用する場合、当該サービスの処理に従います。
+        </p>
+
+        <h2>LINE</h2>
+        <p>
+          LINE公式アカウントURLが設定されている場合のみ、サイト上にリンクを表示します。未設定時は表示しません。
+        </p>
+
+        <h2>お問い合わせ</h2>
+        <p>
+          本ポリシーに関するお問い合わせは、
+          {
+            sevenByte.email ? (
+              <a href={`mailto:${sevenByte.email}`}>{sevenByte.email}</a>
+            ) : (
+              <>サイトのお問い合わせフォーム</>
+            )
+          }
+          までご連絡ください。
+        </p>
+
+        <p style="margin-top:2rem">
+          <a class="btn btn-ghost" href={p('/contact/')}>お問い合わせへ</a>
+        </p>
+      </div>
+    </section>
+  </main>
+  <AgencyFooter />
+</BaseLayout>

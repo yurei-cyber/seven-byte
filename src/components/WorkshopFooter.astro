@@ -4,17 +4,19 @@ import { path as p } from '../config/paths';
 ---
 
 <footer class="site-footer">
-  <div class="wrap inner">
-    <div>
-      <strong>{demoWorkshop.name}</strong>
-      <p style="margin:0.4rem 0 0">{demoWorkshop.area}</p>
-      <p style="margin:0.25rem 0 0">{demoWorkshop.hours}</p>
-    </div>
-    <div>
-      <p style="margin:0">{demoWorkshop.legalNote}</p>
-      <p style="margin:0.75rem 0 0">
-        <a href={p('/')}>制作：Seven Byte</a>
-      </p>
+  <div class="wrap inner" style="grid-template-columns:1fr">
+    <div style="display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between">
+      <div>
+        <strong style="color:var(--text)">{demoWorkshop.name}</strong>
+        <p style="margin:0.4rem 0 0">{demoWorkshop.area}</p>
+        <p style="margin:0.25rem 0 0">{demoWorkshop.hours}</p>
+      </div>
+      <div>
+        <p style="margin:0">{demoWorkshop.legalNote}</p>
+        <p style="margin:0.75rem 0 0">
+          <a href={p('/')}>制作：Seven Byte</a>
+        </p>
+      </div>
     </div>
   </div>
 </footer>

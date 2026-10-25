@@ -3,19 +3,22 @@ import { sevenByte } from '../config/site';
 import { path as p } from '../config/paths';
 
 const current = Astro.url.pathname;
+const home = p('/');
 
 const links = [
-  { href: p('/'), label: 'ご案内', match: '/' },
-  { href: p('/plan/'), label: '初期プラン', match: '/plan' },
-  { href: p('/process/'), label: '進め方', match: '/process' },
-  { href: p('/contact/'), label: 'お見積り', match: '/contact' },
-  { href: p('/demo/'), label: 'デモサイト', match: '/demo' },
+  { href: `${home}#services`, label: 'サービス', match: '#services' },
+  { href: `${home}#differences`, label: '選ばれる理由', match: '#differences' },
+  { href: `${home}#process`, label: '進め方', match: '#process' },
+  { href: `${home}#portfolio`, label: '実績デモ', match: '#portfolio' },
+  { href: p('/contact/'), label: 'お問い合わせ', match: '/contact' },
 ];
 ---
 
 <header class="site-header">
   <div class="inner">
-    <a class="brand" href={p('/')}>Seven <span>Byte</span></a>
+    <a class="brand" href={home} aria-label="Seven Byte ホーム">
+      SE<span class="seven">7</span>EN BYTE
+    </a>
     <button
       class="nav-toggle"
       type="button"
@@ -30,24 +33,17 @@ const links = [
         links.map((link) => (
           <a
             href={link.href}
-            aria-current={
-              link.match === '/'
-                ? current === p('/') || current === p('').replace(/\/$/, '') || current.endsWith('/seven-byte/') || current === '/'
-                  ? 'page'
-                  : undefined
-                : current.includes(link.match)
-                  ? 'page'
-                  : undefined
-            }
+            aria-current={current.includes(link.match) ? 'page' : undefined}
           >
             {link.label}
           </a>
         ))
       }
+      <a class="btn btn-primary" href={p('/contact/')}>無料で相談する</a>
       {
         sevenByte.lineEnabled ? (
           <a class="btn btn-line" href={sevenByte.lineUrl} rel="noopener noreferrer" target="_blank">
-            LINEで相談
+            LINE
           </a>
         ) : null
       }
@@ -61,5 +57,11 @@ const links = [
   toggle?.addEventListener('click', () => {
     const open = nav?.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  nav?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    });
   });
 </script>

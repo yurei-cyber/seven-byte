@@ -19,15 +19,5 @@ const {
     <a class={className} href={href} rel="noopener noreferrer" target="_blank">
       {label}
     </a>
-  ) : (
-    <span
-      class={`${className}`}
-      aria-disabled="true"
-      title="LINE URL が未設定のため表示のみ無効です"
-      style="display:none"
-      data-line-placeholder
-    >
-      {label}（未設定）
-    </span>
-  )
+  ) : null
 }

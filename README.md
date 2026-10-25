@@ -1,29 +1,28 @@
-# Seven Byte（セブンバイト）サイト
+# Seven Byte（セブンバイト）
 
-浜松・掛川・袋井の自動車整備工場・中古車販売店向けに、ホームページ制作を案内する静的サイトです。架空の整備工場デモ（`/demo/`）も同梱しています。
+浜松・掛川・袋井を中心とした中小企業向けの、ホームページ制作・業務システム・保守を案内する静的サイトです。架空の整備工場デモ（`/demo/`）を含みます。
 
 ## 技術選定
 
-**Astro（静的出力）** を採用しています。
+**Astro 7（静的出力）** を継続採用しています。
 
-- マーケティングサイトに十分な SSG / 静的 HTML
-- パフォーマンスと運用の単純さ（Node ランタイム不要でホスティング可）
-- フォームはクライアント検証 + mailto / 外部エンドポイント（Formspree 等）
-- 決済・機密データの保存は行いません
+- マーケティング／コーポレートに十分な SSG
+- GitHub Pages で運用可能（Node ランタイム不要）
+- フォームはクライアント検証 + mailto / 外部エンドポイント（Formspree 等）のサーバー側検証
+- 決済・機密データの保管は行いません
 
-## ページ構成
+静的ホスト単体ではファーストパーティのサーバーバリデーションができないため、本番では `PUBLIC_FORM_ENDPOINT`（Formspree 等）の利用を推奨します。
+
+## ページ
 
 | パス | 内容 |
 |------|------|
-| `/` | Seven Byte ご案内 |
-| `/plan/` | 初期プランの範囲 |
+| `/` | コーポレート（サービス・価格目安・差別化・プロセス・FAQ・相談） |
+| `/contact/` | お見積り・相談フォーム |
+| `/plan/` | サービス範囲の詳細 |
 | `/process/` | 制作の進め方 |
-| `/contact/` | お見積りフォーム |
-| `/demo/` | 架空整備工場デモ（トップ） |
-| `/demo/services/` | デモ：サービス |
-| `/demo/contact/` | デモ：お問い合わせ |
-
-デモはバナーと文言で架空であることを明示しています。偽の口コミ・評価・実績は掲載しません。
+| `/privacy/` | プライバシーポリシー |
+| `/demo/` ほか | 架空整備工場デモ（実在しない旨を明示） |
 
 ## セットアップ
 
@@ -33,82 +32,52 @@ cp .env.example .env
 npm run dev
 ```
 
-本番ビルド:
-
 ```bash
 npm run build
 npm run preview
 ```
 
-成果物は `dist/` です。
-
-任意のブラウザスモーク（preview 起動中、`puppeteer-core` が必要）:
+任意スモーク（preview 起動中）:
 
 ```bash
 npm install --no-save puppeteer-core
 npm run smoke
 ```
 
-
-## 環境変数（公開設定のみ）
-
-`.env.example` を参照。すべて `PUBLIC_` 付きの公開値です。秘密鍵を置かないでください。
+## 環境変数（公開値のみ）
 
 | 変数 | 用途 |
 |------|------|
-| `PUBLIC_SITE_URL` | 正規 URL / OGP / canonical |
-| `PUBLIC_CONTACT_EMAIL` | 表示用メール・mailto 送信先 |
-| `PUBLIC_CONTACT_PHONE` | 表示用電話（任意） |
-| `PUBLIC_LINE_URL` | LINE 公式アカウント URL。**未設定時はボタン非表示** |
-| `PUBLIC_FORM_ENDPOINT` | Formspree 等の POST 先。未設定時は mailto |
+| `PUBLIC_SITE_URL` | canonical / OGP（既定: GitHub Pages URL） |
+| `PUBLIC_BASE_PATH` | サブパス（GitHub Pages では `/seven-byte/`） |
+| `PUBLIC_CONTACT_EMAIL` | 表示・mailto |
+| `PUBLIC_CONTACT_PHONE` | 表示（任意） |
+| `PUBLIC_LINE_URL` | LINE公式。**未設定時は非表示** |
+| `PUBLIC_FORM_ENDPOINT` | Formspree 等。未設定かつメール未設定なら送信不可 |
 
-### LINE ボタン
+偽の成功表示はしません。受付先未設定時はエラーを表示します。
 
-架空の LINE URL は入れません。`PUBLIC_LINE_URL` を設定するまで CTA は出ません。
+## 公開
 
-例: `PUBLIC_LINE_URL=https://line.me/R/ti/p/@your-id`
+### GitHub Pages（現行）
 
-### フォーム配線
-
-1. **簡易**: `PUBLIC_CONTACT_EMAIL` のみ設定 → 送信でメーラー起動（mailto）
-2. **推奨**: [Formspree](https://formspree.io/) などでフォーム ID を作成し `PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxxxx` を設定
-
-カード番号・マイナンバー等は送らない運用です。
-
-## 公開手順
-
-GitHub への自動作成ができない環境では、次でリポジトリ化してデプロイします。
-
-### 1. GitHub リポジトリ作成
+- サイト: https://yurei-cyber.github.io/seven-byte/
+- ブランチ `gh-pages` に `dist/` を配置（`.nojekyll` 必須）
+- ビルド例:
 
 ```bash
-cd seven-byte
-git init
-git add .
-git commit -m "Initial Seven Byte marketing site"
-gh auth login
-gh repo create seven-byte --public --source=. --remote=origin --push
+PUBLIC_SITE_URL=https://yurei-cyber.github.io/seven-byte \
+PUBLIC_BASE_PATH=/seven-byte/ \
+npm run build
+# dist を gh-pages へデプロイ
 ```
 
-`gh` が使えない場合は GitHub 上で空リポジトリ `seven-byte` を作成し:
+### Vercel（任意）
 
-```bash
-git remote add origin https://github.com/<YOUR_USER>/seven-byte.git
-git branch -M main
-git push -u origin main
-```
+- Framework Preset: Astro
+- 環境変数に上記 `PUBLIC_*` を設定
+- ルートドメイン利用時は `PUBLIC_BASE_PATH=/` を推奨
 
-### 2. ホスティング例（Cloudflare Pages / Netlify / GitHub Pages）
+## 画像
 
-- ビルドコマンド: `npm run build`
-- 出力ディレクトリ: `dist`
-- 環境変数に `.env.example` の値を設定
-- `PUBLIC_SITE_URL` を本番ドメインに合わせ、`public/robots.txt` と `public/sitemap.xml` のドメインも更新
-
-## 画像クレジット
-
-雰囲気写真は Unsplash のストック画像をローカルに保存して使用しています（デモ・雰囲気用）。本番店舗では顧客提供写真への差し替えを推奨します。
-
-## ライセンス
-
-プロジェクトコードの利用条件はリポジトリオーナーが別途定める想定です。コンテンツ（文言）は Seven Byte 向け原稿です。
+雰囲気写真は Unsplash 由来のローカル保存ファイルです。本番店舗では顧客提供写真への差し替えを推奨します。

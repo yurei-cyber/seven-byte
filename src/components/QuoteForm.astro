@@ -1,6 +1,12 @@
 ---
 import { sevenByte } from '../config/site';
 
+/**
+ * Client validation + optional remote endpoint (Formspree etc.).
+ * Static hosting has no first-party server validation; the remote endpoint
+ * (when configured) provides server-side checks. Never report success unless
+ * mailto opened with a real address or the endpoint returned OK.
+ */
 const endpoint = sevenByte.formEndpoint;
 const mailto = sevenByte.email;
 const mode = sevenByte.formMode;
@@ -15,6 +21,12 @@ const mode = sevenByte.formMode;
   data-mailto={mailto || ''}
   novalidate
 >
+  {/* Honeypot — bots filling this are rejected client-side */}
+  <div class="hp-field" aria-hidden="true">
+    <label for="company_website">Website</label>
+    <input id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
   <div class="field">
     <label for="business-name">店舗名・屋号 <span aria-hidden="true">*</span></label>
     <input
@@ -36,9 +48,21 @@ const mode = sevenByte.formMode;
       <option value="整備工場">自動車整備工場</option>
       <option value="中古車販売">中古車販売</option>
       <option value="併設">整備と販売の併設</option>
-      <option value="その他">その他</option>
+      <option value="その他中小企業">その他の中小企業・サービス業</option>
     </select>
     <span class="error" data-error-for="businessType" role="alert"></span>
+  </div>
+
+  <div class="field">
+    <label for="interest">ご興味のあるサービス <span aria-hidden="true">*</span></label>
+    <select id="interest" name="interest" required>
+      <option value="">選択してください</option>
+      <option value="ホームページ制作">ホームページ制作</option>
+      <option value="業務システム開発">業務システム開発</option>
+      <option value="保守・運用">保守・運用サポート</option>
+      <option value="相談のみ">まずは相談したい</option>
+    </select>
+    <span class="error" data-error-for="interest" role="alert"></span>
   </div>
 
   <div class="field">
@@ -62,14 +86,7 @@ const mode = sevenByte.formMode;
 
   <div class="field">
     <label for="contact-name">ご担当者名 <span aria-hidden="true">*</span></label>
-    <input
-      id="contact-name"
-      name="contactName"
-      type="text"
-      required
-      maxlength="40"
-      autocomplete="name"
-    />
+    <input id="contact-name" name="contactName" type="text" required maxlength="40" autocomplete="name" />
     <span class="error" data-error-for="contactName" role="alert"></span>
   </div>
 
@@ -98,12 +115,12 @@ const mode = sevenByte.formMode;
       inputmode="tel"
       placeholder="053-000-0000"
     />
-    <span class="hint">半角数字とハイフンのみ。個人情報の扱いにご注意ください。</span>
+    <span class="hint">半角数字とハイフンのみ。</span>
     <span class="error" data-error-for="phone" role="alert"></span>
   </div>
 
   <div class="field">
-    <label for="message">ご要望・現状サイトの有無など <span aria-hidden="true">*</span></label>
+    <label for="message">ご要望・現状など <span aria-hidden="true">*</span></label>
     <textarea
       id="message"
       name="message"
@@ -114,24 +131,18 @@ const mode = sevenByte.formMode;
     <span class="error" data-error-for="message" role="alert"></span>
   </div>
 
-  <p class="hint" style="margin:0;color:var(--sb-slate);font-size:0.85rem">
-    本フォームでは決済情報やマイナンバー等の機密情報は送信しないでください。
+  <p class="hint" style="margin:0">
+    決済情報やマイナンバー等の機微情報は送信しないでください。
     {
-      mode === 'mailto' ? (
-        <>
-          {mailto
-            ? '送信時にメール作成画面が開きます。'
-            : '受付メールアドレス未設定のため、送信前に PUBLIC_CONTACT_EMAIL または PUBLIC_FORM_ENDPOINT を設定してください。'}
-        </>
-      ) : (
-        '送信先は設定済みのフォームエンドポイントです。'
-      )
+      mode === 'endpoint'
+        ? '送信先は設定済みのフォームエンドポイントです（サーバー側でも検証されます）。'
+        : mailto
+          ? '送信時にメール作成画面が開きます。送信完了はメーラー側の操作が必要です。'
+          : '受付先が未設定のため、現時点では送信できません。PUBLIC_CONTACT_EMAIL または PUBLIC_FORM_ENDPOINT の設定が必要です。'
     }
   </p>
 
-  <button class="btn btn-primary" type="submit" id="quote-submit">
-    お見積りを依頼する
-  </button>
+  <button class="btn btn-primary" type="submit" id="quote-submit">無料で相談する</button>
   <p class="form-status" id="quote-status" aria-live="polite"></p>
 </form>
 
@@ -139,16 +150,6 @@ const mode = sevenByte.formMode;
   const form = document.getElementById('quote-form') as HTMLFormElement | null;
   const statusEl = document.getElementById('quote-status');
   const submitBtn = document.getElementById('quote-submit') as HTMLButtonElement | null;
-
-  const messages: Record<string, string> = {
-    businessName: '店舗名を入力してください（80文字以内）。',
-    businessType: '業種を選択してください。',
-    area: '所在地を入力してください。',
-    contactName: 'ご担当者名を入力してください。',
-    email: '有効なメールアドレスを入力してください。',
-    phone: '電話番号は数字とハイフンのみで入力してください。',
-    message: 'ご要望を入力してください（2000文字以内）。',
-  };
 
   function setError(name: string, text: string) {
     const el = form?.querySelector(`[data-error-for="${name}"]`);
@@ -166,8 +167,15 @@ const mode = sevenByte.formMode;
     clearErrors();
     let ok = true;
 
+    const honeypot = (form.elements.namedItem('company_website') as HTMLInputElement).value.trim();
+    if (honeypot) {
+      statusEl && ((statusEl.dataset.state = 'err'), (statusEl.textContent = '送信をブロックしました。'));
+      return false;
+    }
+
     const businessName = (form.elements.namedItem('businessName') as HTMLInputElement).value.trim();
     const businessType = (form.elements.namedItem('businessType') as HTMLSelectElement).value;
+    const interest = (form.elements.namedItem('interest') as HTMLSelectElement).value;
     const area = (form.elements.namedItem('area') as HTMLInputElement).value.trim();
     const contactName = (form.elements.namedItem('contactName') as HTMLInputElement).value.trim();
     const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
@@ -175,34 +183,37 @@ const mode = sevenByte.formMode;
     const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim();
 
     if (!businessName || businessName.length > 80) {
-      setError('businessName', messages.businessName);
+      setError('businessName', '店舗名を入力してください（80文字以内）。');
       ok = false;
     }
     if (!businessType) {
-      setError('businessType', messages.businessType);
+      setError('businessType', '業種を選択してください。');
+      ok = false;
+    }
+    if (!interest) {
+      setError('interest', 'ご興味のあるサービスを選択してください。');
       ok = false;
     }
     if (!area || area.length > 40) {
-      setError('area', messages.area);
+      setError('area', '所在地を入力してください。');
       ok = false;
     }
     if (!contactName || contactName.length > 40) {
-      setError('contactName', messages.contactName);
+      setError('contactName', 'ご担当者名を入力してください。');
       ok = false;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('email', messages.email);
+      setError('email', '有効なメールアドレスを入力してください。');
       ok = false;
     }
     if (phone && !/^[0-9+\-() ]{8,20}$/.test(phone)) {
-      setError('phone', messages.phone);
+      setError('phone', '電話番号は数字とハイフンのみで入力してください。');
       ok = false;
     }
     if (!message || message.length > 2000) {
-      setError('message', messages.message);
+      setError('message', 'ご要望を入力してください（2000文字以内）。');
       ok = false;
     }
-
     return ok;
   }
 
@@ -216,31 +227,29 @@ const mode = sevenByte.formMode;
     if (!validate()) {
       statusEl.dataset.state = 'err';
       statusEl.textContent = '入力内容をご確認ください。';
-      const firstInvalid = form.querySelector('.error:not(:empty)')?.previousElementSibling as
-        | HTMLElement
-        | null;
-      firstInvalid?.focus?.();
       return;
     }
 
     const mode = form.dataset.mode;
     const mailto = form.dataset.mailto || '';
     const data = new FormData(form);
+    data.delete('company_website');
 
     if (mode === 'mailto') {
       if (!mailto) {
         statusEl.dataset.state = 'err';
         statusEl.textContent =
-          '受付先が未設定です。README の手順で PUBLIC_CONTACT_EMAIL または PUBLIC_FORM_ENDPOINT を設定してください。';
+          '受付先が未設定です。送信は完了していません。PUBLIC_CONTACT_EMAIL または PUBLIC_FORM_ENDPOINT を設定してください。';
         return;
       }
       const subject = encodeURIComponent(
-        `【お見積り】${String(data.get('businessName') || '')}（${String(data.get('area') || '')}）`,
+        `【相談】${String(data.get('businessName') || '')}（${String(data.get('area') || '')}）`,
       );
       const body = encodeURIComponent(
         [
           `店舗名: ${data.get('businessName')}`,
           `業種: ${data.get('businessType')}`,
+          `興味: ${data.get('interest')}`,
           `所在地: ${data.get('area')}`,
           `担当者: ${data.get('contactName')}`,
           `メール: ${data.get('email')}`,
@@ -252,7 +261,8 @@ const mode = sevenByte.formMode;
       );
       window.location.href = `mailto:${mailto}?subject=${subject}&body=${body}`;
       statusEl.dataset.state = 'ok';
-      statusEl.textContent = 'メール作成画面を開きました。送信まで完了してください。';
+      statusEl.textContent =
+        'メール作成画面を開きました。メーラーで送信するまで受付は完了しません。';
       return;
     }
 
@@ -269,7 +279,7 @@ const mode = sevenByte.formMode;
       form.reset();
     } catch {
       statusEl.dataset.state = 'err';
-      statusEl.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+      statusEl.textContent = '送信に失敗しました。送信は完了していません。時間をおいて再度お試しください。';
     } finally {
       if (submitBtn) submitBtn.disabled = false;
     }

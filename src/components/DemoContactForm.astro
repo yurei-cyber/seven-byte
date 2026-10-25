@@ -21,7 +21,7 @@ const mode = sevenByte.formMode;
   data-demo="true"
   novalidate
 >
-  <p class="hint" style="margin:0;padding:0.75rem;background:var(--sb-accent-soft)">
+  <p class="hint" style="margin:0;padding:0.75rem;background:var(--purple-dim)">
     これは架空デモ用のフォームです。実在の店舗への問い合わせではありません。
   </p>
 
@@ -97,9 +97,9 @@ const mode = sevenByte.formMode;
 
     if (mode === 'mailto') {
       if (!mailto) {
-        statusEl.dataset.state = 'ok';
+        statusEl.dataset.state = 'err';
         statusEl.textContent =
-          'デモ検証：入力は有効です。本番ではフォーム送信先を設定すると実際に送信できます。';
+          '入力は有効ですが、受付先未設定のため送信は完了していません（デモ）。';
         return;
       }
       const subject = encodeURIComponent(`【デモ問い合わせ】${name}`);

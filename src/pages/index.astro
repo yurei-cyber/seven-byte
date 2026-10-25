@@ -1,112 +1,244 @@
 ---
-import { path as p } from '../config/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AgencyHeader from '../components/AgencyHeader.astro';
 import AgencyFooter from '../components/AgencyFooter.astro';
+import QuoteForm from '../components/QuoteForm.astro';
 import LineButton from '../components/LineButton.astro';
-import { sevenByte } from '../config/site';
+import {
+  sevenByte,
+  services,
+  differentiators,
+  processSteps,
+  faqs,
+  portfolioItems,
+  demoWorkshop,
+} from '../config/site';
+import { path as p } from '../config/paths';
 ---
 
 <BaseLayout
-  title="Seven Byte｜浜松・掛川・袋井の整備工場・中古車店向けホームページ"
-  description="セブンバイトは、浜松・掛川・袋井の自動車整備工場と中古車販売店向けに、わかりやすく信頼感のあるホームページを制作します。"
+  title="Seven Byte｜ホームページ制作・業務システム・保守（浜松・掛川・袋井）"
+  description="セブンバイトは、ホームページ制作から業務システム開発・保守まで。浜松・掛川・袋井の中小企業向けに実用的なデジタルソリューションを提供します。"
   ogImage="/images/agency-desk.jpg"
 >
   <AgencyHeader />
   <main id="main">
-    <section class="hero" aria-label="Seven Byte のご案内">
-      <div class="hero-media">
-        <img
-          src={p("/images/agency-desk.jpg")}
-          alt="ノートPCとデスクでウェブサイト制作に取り組む様子"
-          width="1600"
-          height="1065"
-          fetchpriority="high"
-        />
-      </div>
+    <section class="hero" aria-label="Seven Byte ヒーロー">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-mark" aria-hidden="true">7</div>
       <div class="hero-content">
-        <p class="hero-brand">Seven <span class="accent">Byte</span></p>
-        <h1>整備工場と中古車店のための、実務に効くホームページ</h1>
-        <p class="lede">
-          浜松・掛川・袋井の地域密着ビジネスに合わせて、車検案内・在庫導線・電話・アクセスを迷わせない構成で制作します。
-        </p>
+        <p class="hero-brand">SE<span class="seven">7</span>EN BYTE</p>
+        <h1>{sevenByte.headline}</h1>
+        <p class="lede">{sevenByte.subhead}</p>
+        <p class="region">{sevenByte.areaDetail}</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href={p("/contact/")}>お見積りを依頼</a>
-          <a class="btn btn-ghost" href={p("/demo/")} style="border-color:rgba(247,249,251,0.45);color:#f7f9fb">
-            デモサイトを見る
-          </a>
-          {
-            sevenByte.lineEnabled ? (
-              <LineButton href={sevenByte.lineUrl} enabled />
-            ) : null
-          }
+          <a class="btn btn-primary" href={p('/contact/')}>無料で相談する</a>
+          <a class="btn btn-ghost" href="#services">サービスを見る</a>
+          <LineButton href={sevenByte.lineUrl} enabled={sevenByte.lineEnabled} label="LINEで相談" />
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="services">
       <div class="wrap">
         <div class="section-head">
-          <h2>提供していること</h2>
+          <span class="eyebrow">Services</span>
+          <h2>サービスと参考価格</h2>
           <p>
-            見た目だけのサイトではなく、来店と電話につながる情報設計を重視します。必要なページに絞り、更新しやすい形で納品します。
+            いずれも税別の参考価格です。確定金額はヒアリング後の見積でご提示します。検索順位や売上の保証は行いません。
           </p>
         </div>
-        <ul class="stack-list">
-          <li>
-            <strong>整備工場向けサイト</strong>
-            <p>車検・点検・修理メニュー、営業時間、アクセス、問い合わせ導線を整理し、スマホでも迷わない構成にします。</p>
-          </li>
-          <li>
-            <strong>中古車販売店向けサイト</strong>
-            <p>店舗の信頼感と連絡手段を前面に。在庫の見せ方は初期プランの範囲内でシンプルに設計します。</p>
-          </li>
-          <li>
-            <strong>地域向けの基本SEO</strong>
-            <p>タイトル・説明文・見出し構造・地図・連絡先の明示など、検索と信頼性の土台を整えます。</p>
-          </li>
-        </ul>
+        <div class="grid-3">
+          {
+            services.map((service) => (
+              <article class="service-block">
+                <h3>{service.title}</h3>
+                <p class="price">{service.price}</p>
+                <p class="price-note">{service.priceNote}</p>
+                <p style="margin:0;color:var(--muted)">{service.summary}</p>
+                <div>
+                  <p class="price-note" style="margin-bottom:0.35rem">含まれる目安</p>
+                  <ul>
+                    {service.scope.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p class="price-note" style="margin-bottom:0.35rem">含まない例</p>
+                  <ul>
+                    {service.outOfScope.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <a class="btn btn-ghost" href={p('/contact/')}>この内容で相談</a>
+              </article>
+            ))
+          }
+        </div>
+        <p class="disclaimer" style="margin-top:1.5rem">
+          表示価格は参考です。追加ページ、特殊連携、原稿作成などは別途お見積りとなります。
+        </p>
       </div>
     </section>
 
-    <section class="section" style="padding-top:0">
+    <section class="section" id="automotive">
       <div class="wrap split">
         <div class="media-plane">
           <img
-            src={p("/images/workshop-hero.jpg")}
+            src={p('/images/workshop-hero.jpg')}
             alt="自動車整備の作業風景（雰囲気写真）"
             width="1920"
             height="1080"
             loading="lazy"
           />
         </div>
-        <div class="prose">
-          <h2>浜松・掛川・袋井に特化</h2>
-          <p>
-            遠州エリアの整備工場・中古車販売店が、近所のお客様に「ここなら任せられる」と感じてもらえる表現を目指します。過度な演出や根拠のない実績表現は使いません。
+        <div>
+          <span class="eyebrow">Automotive</span>
+          <h2 style="font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 0.75rem">
+            整備工場・中古車店の現場に寄せた設計
+          </h2>
+          <p style="color:var(--muted);margin:0 0 1rem">
+            車検メニュー、営業時間、アクセス、電話・フォーム導線など、来店につながる情報を優先します。架空の口コミや「地域No.1」表現は使いません。
           </p>
-          <p>
-            まずは初期プランの範囲をご確認ください。追加機能は必要になったタイミングで段階的に広げられます。
+          <p style="color:var(--muted);margin:0 0 1.5rem">
+            完成イメージは架空デモ「{demoWorkshop.name}」で確認できます。実在の店舗ではありません。
           </p>
-          <p style="margin-top:1.5rem">
-            <a class="btn btn-primary" href={p("/plan/")}>初期プランの範囲を見る</a>
-          </p>
+          <a class="btn btn-primary" href={p('/demo/')}>デモサイトを見る</a>
         </div>
       </div>
     </section>
 
-    <section class="section band">
+    <section class="section" id="differences">
       <div class="wrap">
         <div class="section-head">
-          <h2>次の一歩</h2>
-          <p>デモで完成イメージを確認し、進め方とお見積りからご相談ください。</p>
+          <span class="eyebrow">Why Seven Byte</span>
+          <h2>選ばれる理由</h2>
+          <p>根拠のない実績数字は掲載しません。提供の姿勢として、次の5点を大切にしています。</p>
         </div>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href={p("/process/")}>制作の進め方</a>
-          <a class="btn btn-ghost" href={p("/contact/")} style="border-color:rgba(247,249,251,0.4);color:#f7f9fb">
-            お見積りフォーム
-          </a>
+        <ul class="stack-list">
+          {
+            differentiators.map((item) => (
+              <li>
+                <strong>{item.title}</strong>
+                <p>{item.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="process">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Process</span>
+          <h2>制作の進め方</h2>
+          <p>確認ポイントを絞り、小さな店舗でも負担が少ない流れにしています。</p>
         </div>
+        <ol class="steps">
+          {
+            processSteps.map((step) => (
+              <li>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="portfolio">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Work</span>
+          <h2>ポートフォリオ</h2>
+          <p>
+            現時点ではデモ／コンセプトのみです。実在クライアントの掲載はありません。今後の実案件はここに追加する想定です。
+          </p>
+        </div>
+        <div class="portfolio-grid">
+          {
+            portfolioItems.map((item) => (
+              <a class="portfolio-item" href={p(item.href)}>
+                <span class="badge">{item.label}</span>
+                <h3>{item.title}</h3>
+                <p>{item.summary}</p>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2>よくある質問</h2>
+        </div>
+        <div class="faq">
+          {
+            faqs.map((item) => (
+              <details>
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="wrap split" style="align-items:start">
+        <div>
+          <div class="section-head">
+            <span class="eyebrow">Contact</span>
+            <h2>無料相談・お見積り</h2>
+            <p>
+              必須項目のみご記入ください。受付先が未設定の環境では送信完了にはなりません（偽の成功表示はしません）。
+            </p>
+          </div>
+          <QuoteForm />
+        </div>
+        <aside>
+          <p class="footer-title">連絡について</p>
+          {
+            sevenByte.email ? (
+              <p style="color:var(--muted)">
+                メール：
+                <a href={`mailto:${sevenByte.email}`}>{sevenByte.email}</a>
+              </p>
+            ) : (
+              <p style="color:var(--muted)">
+                表示用メールは <code>PUBLIC_CONTACT_EMAIL</code> 設定後に表示されます。
+              </p>
+            )
+          }
+          {
+            sevenByte.phone ? (
+              <p style="color:var(--muted)">
+                電話：
+                <a href={`tel:${sevenByte.phone.replace(/[^\d+]/g, '')}`}>{sevenByte.phone}</a>
+              </p>
+            ) : null
+          }
+          <p style="margin-top:1rem">
+            <LineButton href={sevenByte.lineUrl} enabled={sevenByte.lineEnabled} />
+          </p>
+          {
+            !sevenByte.lineEnabled ? (
+              <p class="hint">LINEボタンは <code>PUBLIC_LINE_URL</code> 設定まで非表示です。</p>
+            ) : null
+          }
+          <p style="color:var(--muted);margin-top:1.5rem">{sevenByte.areaDetail}</p>
+          <p style="margin-top:1rem">
+            <a href={p('/privacy/')}>プライバシーポリシー</a>
+          </p>
+        </aside>
       </div>
     </section>
   </main>
