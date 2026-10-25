@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { sevenByte } from '../config/site';
+import { path as p } from '../config/paths';
 
 interface Props {
   title: string;
@@ -18,8 +19,12 @@ const {
   ogImage = '/images/agency-desk.jpg',
 } = Astro.props;
 
-const canonical = new URL(canonicalPath, sevenByte.siteUrl).toString();
-const ogImageUrl = new URL(ogImage, sevenByte.siteUrl).toString();
+const origin = new URL(sevenByte.siteUrl).origin;
+const normalizedPath = canonicalPath.startsWith(import.meta.env.BASE_URL)
+  ? canonicalPath
+  : p(canonicalPath);
+const canonical = `${origin}${normalizedPath.endsWith('/') ? normalizedPath : `${normalizedPath}/`}`;
+const ogImageUrl = `${origin}${p(ogImage)}`;
 const fullTitle = title.includes('Seven Byte') || title.includes('セブンバイト')
   ? title
   : `${title} | Seven Byte`;
@@ -46,7 +51,7 @@ const fullTitle = title.includes('Seven Byte') || title.includes('セブンバ�
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={p('/favicon.svg')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

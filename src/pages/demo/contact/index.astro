@@ -1,4 +1,5 @@
 ---
+import { path as p } from '../../../config/paths';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import WorkshopHeader from '../../../components/WorkshopHeader.astro';
 import WorkshopFooter from '../../../components/WorkshopFooter.astro';
@@ -33,7 +34,7 @@ import { demoWorkshop } from '../../../config/site';
             電話番号・LINE・実在住所はデモでは掲載していません。本番サイトでは店舗から提供された事実のみを表示します。
           </p>
           <p style="margin-top:1.5rem">
-            <a href="/">Seven Byte のサイトへ戻る</a>
+            <a href={p("/")}>Seven Byte のサイトへ戻る</a>
           </p>
         </aside>
       </div>

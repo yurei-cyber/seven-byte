@@ -1,5 +1,6 @@
 ---
 import { demoWorkshop } from '../config/site';
+import { path as p } from '../config/paths';
 ---
 
 <footer class="site-footer">
@@ -12,7 +13,7 @@ import { demoWorkshop } from '../config/site';
     <div>
       <p style="margin:0">{demoWorkshop.legalNote}</p>
       <p style="margin:0.75rem 0 0">
-        <a href="/">制作：Seven Byte</a>
+        <a href={p('/')}>制作：Seven Byte</a>
       </p>
     </div>
   </div>

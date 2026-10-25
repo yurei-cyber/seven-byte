@@ -1,4 +1,5 @@
 ---
+import { path as p } from '../../config/paths';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AgencyHeader from '../../components/AgencyHeader.astro';
 import AgencyFooter from '../../components/AgencyFooter.astro';
@@ -49,8 +50,8 @@ import AgencyFooter from '../../components/AgencyFooter.astro';
         </p>
 
         <p style="margin-top:2rem">
-          <a class="btn btn-primary" href="/contact/">この範囲で相談する</a>
-          <a class="btn btn-ghost" href="/process/" style="margin-left:0.5rem">進め方を見る</a>
+          <a class="btn btn-primary" href={p("/contact/")}>この範囲で相談する</a>
+          <a class="btn btn-ghost" href={p("/process/")} style="margin-left:0.5rem">進め方を見る</a>
         </p>
       </div>
     </section>

@@ -5,7 +5,9 @@
 
 const lineUrl = (import.meta.env.PUBLIC_LINE_URL as string | undefined)?.trim() ?? '';
 const formEndpoint = (import.meta.env.PUBLIC_FORM_ENDPOINT as string | undefined)?.trim() ?? '';
-const siteUrl = (import.meta.env.PUBLIC_SITE_URL as string | undefined)?.trim() || 'https://example.com';
+const siteUrl =
+  (import.meta.env.PUBLIC_SITE_URL as string | undefined)?.trim() ||
+  'https://yurei-cyber.github.io/seven-byte';
 
 export const sevenByte = {
   name: 'Seven Byte',

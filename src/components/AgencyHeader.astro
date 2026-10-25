@@ -1,20 +1,21 @@
 ---
 import { sevenByte } from '../config/site';
+import { path as p } from '../config/paths';
 
-const path = Astro.url.pathname;
+const current = Astro.url.pathname;
 
 const links = [
-  { href: '/', label: 'ご案内' },
-  { href: '/plan/', label: '初期プラン' },
-  { href: '/process/', label: '進め方' },
-  { href: '/contact/', label: 'お見積り' },
-  { href: '/demo/', label: 'デモサイト' },
+  { href: p('/'), label: 'ご案内', match: '/' },
+  { href: p('/plan/'), label: '初期プラン', match: '/plan' },
+  { href: p('/process/'), label: '進め方', match: '/process' },
+  { href: p('/contact/'), label: 'お見積り', match: '/contact' },
+  { href: p('/demo/'), label: 'デモサイト', match: '/demo' },
 ];
 ---
 
 <header class="site-header">
   <div class="inner">
-    <a class="brand" href="/">Seven <span>Byte</span></a>
+    <a class="brand" href={p('/')}>Seven <span>Byte</span></a>
     <button
       class="nav-toggle"
       type="button"
@@ -30,11 +31,11 @@ const links = [
           <a
             href={link.href}
             aria-current={
-              link.href === '/'
-                ? path === '/'
+              link.match === '/'
+                ? current === p('/') || current === p('').replace(/\/$/, '') || current.endsWith('/seven-byte/') || current === '/'
                   ? 'page'
                   : undefined
-                : path.startsWith(link.href.replace(/\/$/, ''))
+                : current.includes(link.match)
                   ? 'page'
                   : undefined
             }

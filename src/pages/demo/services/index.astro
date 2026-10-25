@@ -1,4 +1,5 @@
 ---
+import { path as p } from '../../../config/paths';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import WorkshopHeader from '../../../components/WorkshopHeader.astro';
 import WorkshopFooter from '../../../components/WorkshopFooter.astro';
@@ -41,7 +42,7 @@ import { demoWorkshop } from '../../../config/site';
           </li>
         </ul>
         <p style="margin-top:2rem">
-          <a class="btn btn-primary" href="/demo/contact/">デモのお問い合わせへ</a>
+          <a class="btn btn-primary" href={p("/demo/contact/")}>デモのお問い合わせへ</a>
         </p>
       </div>
     </section>

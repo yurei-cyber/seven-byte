@@ -1,24 +1,25 @@
 ---
 import { demoWorkshop } from '../config/site';
+import { path as p } from '../config/paths';
 
-const path = Astro.url.pathname;
+const current = Astro.url.pathname;
 
 const links = [
-  { href: '/demo/', label: 'ホーム' },
-  { href: '/demo/services/', label: 'サービス' },
-  { href: '/demo/contact/', label: 'ご連絡' },
+  { href: p('/demo/'), label: 'ホーム', match: '/demo' },
+  { href: p('/demo/services/'), label: 'サービス', match: '/demo/services' },
+  { href: p('/demo/contact/'), label: 'ご連絡', match: '/demo/contact' },
 ];
 ---
 
 <div class="demo-banner">
   {demoWorkshop.legalNote}
   {' '}
-  <a href="/">Seven Byte のご案内へ</a>
+  <a href={p('/')}>Seven Byte のご案内へ</a>
 </div>
 
 <header class="site-header">
   <div class="inner">
-    <a class="brand" href="/demo/">{demoWorkshop.name}</a>
+    <a class="brand" href={p('/demo/')}>{demoWorkshop.name}</a>
     <button
       class="nav-toggle"
       type="button"
@@ -34,11 +35,11 @@ const links = [
           <a
             href={link.href}
             aria-current={
-              link.href === '/demo/'
-                ? path === '/demo/' || path === '/demo'
+              link.match === '/demo'
+                ? current.includes('/demo') && !current.includes('/demo/services') && !current.includes('/demo/contact')
                   ? 'page'
                   : undefined
-                : path.startsWith(link.href.replace(/\/$/, ''))
+                : current.includes(link.match)
                   ? 'page'
                   : undefined
             }

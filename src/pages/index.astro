@@ -1,4 +1,5 @@
 ---
+import { path as p } from '../config/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AgencyHeader from '../components/AgencyHeader.astro';
 import AgencyFooter from '../components/AgencyFooter.astro';
@@ -16,7 +17,7 @@ import { sevenByte } from '../config/site';
     <section class="hero" aria-label="Seven Byte のご案内">
       <div class="hero-media">
         <img
-          src="/images/agency-desk.jpg"
+          src={p("/images/agency-desk.jpg")}
           alt="ノートPCとデスクでウェブサイト制作に取り組む様子"
           width="1600"
           height="1065"
@@ -30,8 +31,8 @@ import { sevenByte } from '../config/site';
           浜松・掛川・袋井の地域密着ビジネスに合わせて、車検案内・在庫導線・電話・アクセスを迷わせない構成で制作します。
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="/contact/">お見積りを依頼</a>
-          <a class="btn btn-ghost" href="/demo/" style="border-color:rgba(247,249,251,0.45);color:#f7f9fb">
+          <a class="btn btn-primary" href={p("/contact/")}>お見積りを依頼</a>
+          <a class="btn btn-ghost" href={p("/demo/")} style="border-color:rgba(247,249,251,0.45);color:#f7f9fb">
             デモサイトを見る
           </a>
           {
@@ -72,7 +73,7 @@ import { sevenByte } from '../config/site';
       <div class="wrap split">
         <div class="media-plane">
           <img
-            src="/images/workshop-hero.jpg"
+            src={p("/images/workshop-hero.jpg")}
             alt="自動車整備の作業風景（雰囲気写真）"
             width="1920"
             height="1080"
@@ -88,7 +89,7 @@ import { sevenByte } from '../config/site';
             まずは初期プランの範囲をご確認ください。追加機能は必要になったタイミングで段階的に広げられます。
           </p>
           <p style="margin-top:1.5rem">
-            <a class="btn btn-primary" href="/plan/">初期プランの範囲を見る</a>
+            <a class="btn btn-primary" href={p("/plan/")}>初期プランの範囲を見る</a>
           </p>
         </div>
       </div>
@@ -101,8 +102,8 @@ import { sevenByte } from '../config/site';
           <p>デモで完成イメージを確認し、進め方とお見積りからご相談ください。</p>
         </div>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="/process/">制作の進め方</a>
-          <a class="btn btn-ghost" href="/contact/" style="border-color:rgba(247,249,251,0.4);color:#f7f9fb">
+          <a class="btn btn-primary" href={p("/process/")}>制作の進め方</a>
+          <a class="btn btn-ghost" href={p("/contact/")} style="border-color:rgba(247,249,251,0.4);color:#f7f9fb">
             お見積りフォーム
           </a>
         </div>

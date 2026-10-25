@@ -1,5 +1,6 @@
 ---
 import { sevenByte } from '../config/site';
+import { path as p } from '../config/paths';
 ---
 
 <footer class="site-footer">
@@ -16,7 +17,9 @@ import { sevenByte } from '../config/site';
             <a href={`mailto:${sevenByte.email}`}>{sevenByte.email}</a>
           </p>
         ) : (
-          <p style="margin:0">お問い合わせは <a href="/contact/">お見積りフォーム</a> から</p>
+          <p style="margin:0">
+            お問い合わせは <a href={p('/contact/')}>お見積りフォーム</a> から
+          </p>
         )
       }
       {
